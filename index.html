@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Dapur Bu Ijah — Pesan Online</title>
+
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          cream: '#FFF8F0',
+          ink: '#2B1B12',
+          primary: '#FF6B35',
+          primarydark: '#E5502A',
+          gold: '#FFB800',
+          peach: '#FFE8D6',
+          success: '#1DB954',
+        },
+        fontFamily: {
+          display: ['"Baloo 2"', 'sans-serif'],
+          body: ['"Plus Jakarta Sans"', 'sans-serif'],
+        },
+      },
+    },
+  };
+</script>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="phone">
+
+  <!-- ============================================================ -->
+  <!-- PAGE 1: HOME & MENU                                           -->
+  <!-- ============================================================ -->
+  <section id="page-home" class="page">
+    <!-- Header -->
+    <header class="sticky top-0 z-10 bg-cream/95 backdrop-blur px-5 pt-5 pb-3 border-b border-orange-100">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-gold flex items-center justify-center text-2xl shadow-md shadow-orange-200 shrink-0">🍜</div>
+        <div class="min-w-0">
+          <h1 class="font-display font-bold text-xl leading-tight truncate">Dapur Bu Ijah</h1>
+          <p class="text-xs text-ink/60 flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-success inline-block"></span>
+            Buka sekarang · Masakan rumahan, rasa istimewa
+          </p>
+        </div>
+      </div>
+
+      <!-- Category pills -->
+      <div id="categories" class="flex gap-2 overflow-x-auto no-scrollbar mt-4 pb-1"></div>
+    </header>
+
+    <!-- Menu grid -->
+    <main class="flex-1 min-h-0 overflow-y-auto px-5 pt-4 pb-28">
+      <div id="menu-grid" class="grid grid-cols-2 gap-3"></div>
+    </main>
+
+    <!-- Floating cart button (FAB bulat, pojok kanan bawah, harga ikut bertambah) -->
+    <div id="cartbar">
+      <span id="cartbar-total" class="bg-white text-primary font-display font-bold text-sm px-3.5 py-2.5 rounded-full shadow-md shadow-orange-200/70 border border-orange-100">Rp0</span>
+      <button onclick="App.go('cart')" aria-label="Lihat keranjang"
+        class="relative w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primarydark shadow-lg shadow-orange-300/50 flex items-center justify-center text-white text-2xl active:scale-90 transition shrink-0">
+        🛒
+        <span id="cartbar-count" class="absolute -top-1.5 -right-1.5 bg-gold text-ink text-[11px] font-bold min-w-[20px] h-5 px-1 rounded-full flex items-center justify-center border-2 border-cream">0</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- PAGE 2: KERANJANG (CART)                                      -->
+  <!-- ============================================================ -->
+  <section id="page-cart" class="page">
+    <header class="flex items-center gap-3 px-5 pt-5 pb-4 border-b border-orange-100">
+      <button onclick="App.go('home')" class="w-9 h-9 rounded-full bg-peach flex items-center justify-center active:scale-90 transition">←</button>
+      <h2 class="font-display font-bold text-lg">Keranjang Saya</h2>
+    </header>
+
+    <main id="cart-list" class="flex-1 min-h-0 overflow-y-auto px-5 py-4 space-y-3"></main>
+
+    <div id="cart-footer" class="border-t border-orange-100 px-5 py-4 space-y-3 bg-white">
+      <div class="flex justify-between text-sm text-ink/60">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">Rp0</span>
+      </div>
+      <div class="flex justify-between font-display font-bold text-lg">
+        <span>Total</span>
+        <span id="cart-total" class="text-primary">Rp0</span>
+      </div>
+      <button onclick="App.go('payment')" class="w-full py-3.5 rounded-full bg-gradient-to-r from-primary to-primarydark text-white font-display font-bold text-base shadow-md shadow-orange-200 active:scale-[0.98] transition">
+        Lanjut ke Pembayaran
+      </button>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- PAGE 3: PEMBAYARAN                                            -->
+  <!-- ============================================================ -->
+  <section id="page-payment" class="page">
+    <header class="flex items-center gap-3 px-5 pt-5 pb-4 border-b border-orange-100">
+      <button onclick="App.go('cart')" class="w-9 h-9 rounded-full bg-peach flex items-center justify-center active:scale-90 transition">←</button>
+      <h2 class="font-display font-bold text-lg">Pilih Pembayaran</h2>
+    </header>
+
+    <main class="flex-1 min-h-0 overflow-y-auto px-5 py-5 space-y-5">
+      <div class="bg-peach/60 rounded-2xl p-4 flex justify-between items-center">
+        <span class="text-sm text-ink/70">Total Pembayaran</span>
+        <span id="payment-total" class="font-display font-bold text-xl text-primary">Rp0</span>
+      </div>
+
+      <div class="space-y-3">
+        <p class="text-xs font-semibold text-ink/50 tracking-wide">Metode pembayaran</p>
+
+        <!-- Cash option (active/default) -->
+        <button id="pm-cash" onclick="App.selectPayment('cash')"
+          class="w-full flex items-center gap-3 p-4 rounded-2xl border-2 border-primary bg-orange-50 text-left transition">
+          <span class="text-2xl">💵</span>
+          <span class="flex-1">
+            <span class="block font-semibold text-sm">Cash / Bayar di Kasir</span>
+            <span class="block text-xs text-ink/50">Bayar langsung saat pesanan diambil</span>
+          </span>
+          <span id="pm-cash-dot" class="w-5 h-5 rounded-full border-2 border-primary bg-primary flex items-center justify-center text-white text-[10px]">✓</span>
+        </button>
+
+        <!-- QRIS (disabled) -->
+        <div class="w-full flex items-center gap-3 p-4 rounded-2xl border-2 border-dashed border-ink/10 bg-ink/[0.02] opacity-60 cursor-not-allowed">
+          <span class="text-2xl grayscale">📱</span>
+          <span class="flex-1">
+            <span class="block font-semibold text-sm">QRIS</span>
+            <span class="block text-xs text-ink/40">Scan &amp; bayar instan</span>
+          </span>
+          <span class="text-[10px] font-bold uppercase tracking-wide bg-ink/10 text-ink/50 px-2 py-1 rounded-full">Segera Hadir</span>
+        </div>
+
+        <!-- Transfer Bank (disabled) -->
+        <div class="w-full flex items-center gap-3 p-4 rounded-2xl border-2 border-dashed border-ink/10 bg-ink/[0.02] opacity-60 cursor-not-allowed">
+          <span class="text-2xl grayscale">🏦</span>
+          <span class="flex-1">
+            <span class="block font-semibold text-sm">Transfer Bank</span>
+            <span class="block text-xs text-ink/40">Transfer ke rekening toko</span>
+          </span>
+          <span class="text-[10px] font-bold uppercase tracking-wide bg-ink/10 text-ink/50 px-2 py-1 rounded-full">Segera Hadir</span>
+        </div>
+      </div>
+    </main>
+
+    <div class="border-t border-orange-100 px-5 py-4 bg-white">
+      <button onclick="App.confirmOrder()" class="w-full py-3.5 rounded-full bg-gradient-to-r from-primary to-primarydark text-white font-display font-bold text-base shadow-md shadow-orange-200 active:scale-[0.98] transition">
+        Konfirmasi Pesanan &amp; Bayar
+      </button>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- PAGE 4: SUKSES                                                -->
+  <!-- ============================================================ -->
+  <section id="page-success" class="page items-center justify-center px-8 text-center">
+    <div class="relative flex items-center justify-center mb-6">
+      <span class="absolute w-24 h-24 rounded-full border-4 border-success/40 ring-burst"></span>
+      <svg class="check-circle-bg" width="96" height="96" viewBox="0 0 96 96">
+        <circle cx="48" cy="48" r="46" fill="#1DB954"/>
+        <path class="check-path" d="M28 49 L42 63 L70 33" fill="none" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h2 class="font-display font-bold text-2xl mb-2">Hore! Pesanan Berhasil Dibuat</h2>
+    <p class="text-sm text-ink/60">Dapur sedang menyiapkan pesananmu.<br>Mengalihkan ke halaman pelacakan…</p>
+    <div class="flex gap-1.5 mt-5">
+      <span class="w-2 h-2 rounded-full bg-primary animate-bounce [animation-delay:-0.3s]"></span>
+      <span class="w-2 h-2 rounded-full bg-primary animate-bounce [animation-delay:-0.15s]"></span>
+      <span class="w-2 h-2 rounded-full bg-primary animate-bounce"></span>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- PAGE 5: PELACAKAN PESANAN                                     -->
+  <!-- ============================================================ -->
+  <section id="page-tracking" class="page">
+    <header class="px-5 pt-5 pb-4 border-b border-orange-100">
+      <h2 class="font-display font-bold text-lg">Pelacakan Pesanan</h2>
+      <p class="text-xs text-ink/50">Terima kasih sudah memesan di Dapur Bu Ijah 🙏</p>
+    </header>
+
+    <main class="flex-1 min-h-0 overflow-y-auto px-5 py-5 space-y-5">
+      <!-- Queue ticket -->
+      <div class="rounded-2xl border-2 border-dashed border-primary/40 bg-orange-50 p-5 text-center">
+        <p class="text-xs font-semibold text-ink/50 tracking-wide">NOMOR ANTREAN</p>
+        <p id="order-id" class="font-display font-extrabold text-4xl text-primary my-1">#A000</p>
+        <p class="text-xs text-ink/50">Tunjukkan nomor ini saat mengambil pesanan</p>
+      </div>
+
+      <!-- Timer -->
+      <div id="timer-card" class="rounded-2xl bg-ink text-white p-5 text-center transition-colors">
+        <p id="timer-label" class="text-xs uppercase tracking-wide text-white/50 mb-1">Estimasi pesanan selesai dalam</p>
+        <p id="timer-display" class="font-display font-bold text-5xl tabular-nums">15:00</p>
+      </div>
+      <button id="ready-btn" onclick="App.resetOrder()" class="hidden w-full py-4 rounded-2xl btn-ready text-white font-display font-bold text-base shadow-md">
+        Pesanan Anda Sudah Siap Diambil! 🎉
+      </button>
+
+      <!-- Order summary -->
+      <div>
+        <p class="text-xs font-semibold text-ink/50 tracking-wide mb-2">RINGKASAN PESANAN</p>
+        <div id="track-summary" class="space-y-2"></div>
+      </div>
+    </main>
+
+    <div class="border-t border-orange-100 px-5 py-4 bg-white">
+      <button onclick="App.resetOrder()" class="w-full py-3.5 rounded-full border-2 border-primary text-primary font-display font-bold text-base active:scale-[0.98] transition">
+        Pesan Menu Lagi
+      </button>
+    </div>
+  </section>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+  </html>
