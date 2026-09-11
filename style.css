@@ -1,0 +1,75 @@
+* { -webkit-tap-highlight-color: transparent; }
+  html, body { background:#EDE3D8; }
+  body { font-family:'Plus Jakarta Sans', sans-serif; color:#2B1B12; }
+  .font-display { font-family:'Baloo 2', sans-serif; }
+
+  /* Phone frame so it feels like a native app on desktop too */
+  #phone {
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100dvh;
+    background: #FFF8F0;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(0,0,0,0.15);
+  }
+  @media (min-width: 431px) {
+    body { display:flex; align-items:center; justify-content:center; min-height:100vh; padding: 24px 0; }
+    #phone { min-height: 850px; height: 850px; border-radius: 36px; }
+  }
+
+  /* No-scrollbar utility for category pills */
+  .no-scrollbar::-webkit-scrollbar { display:none; }
+  .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+
+  /* Page transition system */
+  .page {
+    position:absolute; inset:0;
+    background:#FFF8F0;
+    display:flex; flex-direction:column;
+    transition: transform .38s cubic-bezier(.22,.68,0,1), opacity .3s ease;
+  }
+  #page-home { transform:none; z-index:1; }
+  #page-cart, #page-payment { transform: translateX(100%); z-index:20; }
+  #page-cart.active, #page-payment.active { transform: translateX(0%); }
+  #page-success, #page-tracking { transform: translateY(100%); z-index:30; }
+  #page-success.active, #page-tracking.active { transform: translateY(0%); }
+
+  /* Floating cart button (FAB bulat, pojok kanan bawah, tetap diam saat scroll) */
+  #cartbar {
+    position:absolute; right:16px; bottom:16px; left:auto;
+    display:flex; align-items:center; gap:8px;
+    transform: scale(0) translateY(20px); opacity:0;
+    transition: transform .3s cubic-bezier(.34,1.56,.64,1), opacity .25s ease;
+    z-index: 15;
+    transform-origin: bottom right;
+    pointer-events:none;
+  }
+  #cartbar.show { transform: scale(1) translateY(0); opacity:1; pointer-events:auto; }
+
+  /* Checkmark draw animation */
+  .check-circle-bg {
+    animation: pop .5s cubic-bezier(.22,.68,0,1) both;
+  }
+  @keyframes pop { 0%{ transform:scale(0); } 70%{ transform:scale(1.08); } 100%{ transform:scale(1); } }
+  .check-path {
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: draw .45s .35s ease forwards;
+  }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+
+  .ring-burst {
+    animation: burst 1s .1s ease-out both;
+  }
+  @keyframes burst { 0%{ transform:scale(.4); opacity:.8;} 100%{ transform:scale(1.9); opacity:0;} }
+
+  @keyframes blink-ready {
+    0%, 100% { background-color:#1DB954; }
+    50% { background-color:#17a34a; }
+  }
+  .btn-ready { animation: blink-ready 1.1s ease-in-out infinite; }
+
+  .qty-btn { touch-action:manipulation; }
+
+  /* Category pill active underline-free style handled via classes in JS */
